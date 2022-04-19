@@ -7,8 +7,8 @@ It uses the `check_word_exists` function that is exported in a WASM module, buil
 
 Considering that the WASM module is already built (see the details [here](../wapc_cuckoo_rust/readme.md)), you can run it as follows:
 
-- `node wapc.js ../wapc_cuckoo_rust/target/wasm32-unknown-unknown/release/wapc_cuckoo_rust.wasm check_word_exists '{"name":"testme"}'`
+- `node wapc.js ../wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm check_word_exists '{"name":"testme"}'`
   and it should return `Result:false`
-- `node wapc.js ../wapc_cuckoo_rust/target/wasm32-unknown-unknown/release/wapc_cuckoo_rust.wasm check_word_exists '{"name":"foo"}'`
+- `node wapc.js ../wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm check_word_exists '{"name":"foo"}'`
   and it should return `Result:true`
 
