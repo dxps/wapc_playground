@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@msgpack/msgpack": "^2.7.2",
+    "@wapc/host": "^0.0.3"
+  }
+}
