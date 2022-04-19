@@ -1,7 +1,6 @@
 # About This Sample
 
-This is a waPC Host (WASM Runtime) done in Rust.<br/>
-Alternatives would be to have it done in Go or Node.js. The Node.js version exists in [wapc_host_node](../wapc_host_node) sibling project.
+This is a waPC host implementation, written in Rust.<br/>
 
 <br/>
 
@@ -13,6 +12,10 @@ Use the standard `cargo build` to build it. The generated result is `./target/de
 
 ## Usage
 
+Considering that the WASM module is already built (see the details [here](../wapc_cuckoo_rust/readme.md)), you can run it as follows:
+
 `./target/debug/wapc_host_rust ../wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm name foo`
+
+It should print `response:"true"` to the standard output.
 
 <br/>
