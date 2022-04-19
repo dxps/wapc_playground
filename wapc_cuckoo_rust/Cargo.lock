@@ -68,22 +68,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cuckoo_wapc_rust"
-version = "0.0.1"
-dependencies = [
- "base64",
- "cuckoofilter",
- "lazy_static",
- "rmp-serde",
- "serde",
- "serde_bytes",
- "serde_derive",
- "serde_json",
- "structopt",
- "wapc-guest",
-]
-
-[[package]]
 name = "cuckoofilter"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -387,6 +371,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47cbd9d778b9718eda797278936f93f25ce81064fe26f0bb6a710cd51315f00b"
 dependencies = [
  "lazy_static",
+]
+
+[[package]]
+name = "wapc_cuckoo_rust"
+version = "0.0.1"
+dependencies = [
+ "base64",
+ "cuckoofilter",
+ "lazy_static",
+ "rmp-serde",
+ "serde",
+ "serde_bytes",
+ "serde_derive",
+ "serde_json",
+ "structopt",
+ "wapc-guest",
 ]
 
 [[package]]

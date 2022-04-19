@@ -3,7 +3,7 @@ authors = ["marius.ileana@gmail.com"]
 description = "A cuckoo filter in Rust using waPC"
 edition = "2018"
 license = "Apache-2.0"
-name = "cuckoo_wapc_rust"
+name = "wapc_cuckoo_rust"
 version = "0.0.1"
 
 [lib]
