@@ -42,8 +42,22 @@ impl Host {
         let input_args = Check_word_existsArgs { name };
         host_call(
             &self.binding,
-            "greeting",
+            "cuckoo",
             "check_word_exists",
+            &serialize(input_args)?,
+        )
+        .map(|vec| {
+            let resp = deserialize::<String>(vec.as_ref()).unwrap();
+            resp
+        })
+        .map_err(|e| e.into())
+    }
+    pub fn handle_input(&self, inp: Input) -> HandlerResult<String> {
+        let input_args = Handle_inputArgs { inp };
+        host_call(
+            &self.binding,
+            "cuckoo",
+            "handle_input",
             &serialize(input_args)?,
         )
         .map(|vec| {
@@ -63,11 +77,16 @@ impl Handlers {
         *CHECK_WORD_EXISTS.write().unwrap() = Some(f);
         register_function(&"check_word_exists", check_word_exists_wrapper);
     }
+    pub fn register_handle_input(f: fn(Input) -> HandlerResult<String>) {
+        *HANDLE_INPUT.write().unwrap() = Some(f);
+        register_function(&"handle_input", handle_input_wrapper);
+    }
 }
 
 #[cfg(feature = "guest")]
 lazy_static::lazy_static! {
 static ref CHECK_WORD_EXISTS: std::sync::RwLock<Option<fn(String) -> HandlerResult<String>>> = std::sync::RwLock::new(None);
+static ref HANDLE_INPUT: std::sync::RwLock<Option<fn(Input) -> HandlerResult<String>>> = std::sync::RwLock::new(None);
 }
 
 #[cfg(feature = "guest")]
@@ -78,10 +97,32 @@ fn check_word_exists_wrapper(input_payload: &[u8]) -> CallResult {
     serialize(result)
 }
 
+#[cfg(feature = "guest")]
+fn handle_input_wrapper(input_payload: &[u8]) -> CallResult {
+    let input = deserialize::<Handle_inputArgs>(input_payload)?;
+    let lock = HANDLE_INPUT.read().unwrap().unwrap();
+    let result = lock(input.inp)?;
+    serialize(result)
+}
+
 #[derive(Debug, PartialEq, Deserialize, Serialize, Default, Clone)]
 pub struct Check_word_existsArgs {
     #[serde(rename = "name")]
     pub name: String,
+}
+
+#[derive(Debug, PartialEq, Deserialize, Serialize, Default, Clone)]
+pub struct Handle_inputArgs {
+    #[serde(rename = "inp")]
+    pub inp: Input,
+}
+
+#[derive(Debug, PartialEq, Deserialize, Serialize, Default, Clone)]
+pub struct Input {
+    #[serde(rename = "x")]
+    pub x: String,
+    #[serde(rename = "y")]
+    pub y: String,
 }
 
 /// The standard function for serializing codec structs into a format that can be
