@@ -12,6 +12,6 @@ It includes:
   - Using a provided wapc guest library for their respective programming languages.
   - Their builds ([this](../wapc_playground/wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm) and [this](./wapc_hello_tinygo/build/wapc_hello_tinygo.wasm)) are included in this repository.
 
-All the waPC Host implementations includes a WASM runtime. Through it, these implementations can invoke the functions that the waPC Guests' are exposing.
+All the waPC Host implementations include a WASM runtime. Through it, these waPC Hosts can invoke the functions that the waPC Guests are exposing.
 
-Read their `readme.md` files for to know how to use them.
+Check out their `readme.md` files to know how to use them.
