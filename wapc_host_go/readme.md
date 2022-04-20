@@ -10,7 +10,7 @@ As prerequisites, have [wasmer](https://wasmer.io/) installed (for example, on L
 
 Considering that the WASM module is already built (see the details [here](../wapc_cuckoo_rust/readme.md)), you can run it as follows:
 
-`go run main.go ../wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm check_word_exists '{"name":"foo"}'` and it 
+`go run main.go ../wapc_cuckoo_rust/build/wapc_cuckoo_rust.wasm check_word_exists '{"name":"foo"}'`
 
 It should print `true` to the standard output.
 
