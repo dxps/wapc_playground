@@ -3,14 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"github.com/wapc/wapc-go/engines/wazero"
 	"os"
 
 	json2msgpack "github.com/izinin/json2msgpack"
 	"github.com/vmihailenco/msgpack"
 
 	"github.com/wapc/wapc-go"
-	"github.com/wapc/wapc-go/engines/wasmer"
 )
 
 func main() {
@@ -20,26 +19,25 @@ func main() {
 	name := os.Args[3]
 
 	ctx := context.Background()
-	code, err := ioutil.ReadFile(wasm)
+	guest, err := os.ReadFile(wasm)
 	if err != nil {
 		panic(err)
 	}
 
-	engine := wasmer.Engine()
+	engine := wazero.Engine()
 
-	module, err := engine.New(code, nil)
+	module, err := engine.New(ctx, nil, guest, &wapc.ModuleConfig{
+		Logger: wapc.PrintlnLogger,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	})
+	defer module.Close(ctx)
+
+	instance, err := module.Instantiate(ctx)
 	if err != nil {
 		panic(err)
 	}
-	module.SetLogger(wapc.Println)
-	module.SetWriter(wapc.Print)
-	defer module.Close()
-
-	instance, err := module.Instantiate()
-	if err != nil {
-		panic(err)
-	}
-	defer instance.Close()
+	defer instance.Close(ctx)
 
 	b := json2msgpack.EncodeJSON([]byte(name))
 	res, err := instance.Invoke(ctx, funcname, b)
